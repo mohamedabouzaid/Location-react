@@ -11,7 +11,6 @@ const App=()=> {
     <Routes>
     <Route path="/" element={<Users />} />
     <Route path="/places/new" element={< NewPlace />} />
-    <div>hello</div>
     <Route path="*" element={<div> 404 page</div>} />
     </Routes>
     </BrowserRouter>
