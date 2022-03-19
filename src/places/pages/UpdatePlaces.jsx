@@ -1,7 +1,8 @@
 import {useParams} from 'react-router-dom';
 import Input from '../../shared/components/ButtonEl/Input'
 import Button from '../../shared/components/ButtonEl/Button'
-import {VALIDATOR_MINLENGTH,VALIDATOR_REQUIRE} from '../../util/validators'
+import {VALIDATOR_MINLENGTH,VALIDATOR_REQUIRE} from '../../shared/util/validators'
+import useFormValidation from '../../shared/hook/useFormValidation';
 
 
 const DummyPlaces=[{id:'p2'
@@ -28,6 +29,29 @@ const UpdatePlaces = () => {
  const placeid=useParams().placeid;
 
  const filterPlace= DummyPlaces.find((place)=>(place.id===placeid))
+ const [formState, inputHandler] = useFormValidation({
+   
+    title: {
+      value:filterPlace.title,
+      isValid: true,
+    },
+    description: {
+      value: filterPlace.description,
+      isValid: true,
+    },
+   address: {
+      value: filterPlace.address,
+      isValid: true,
+    
+  }},
+  true
+);
+
+
+const submitHandler=(e)=>{
+    e.preventDefault();
+    console.log(formState.inputs);
+  }
 
 
     return (
@@ -38,9 +62,9 @@ const UpdatePlaces = () => {
           type="text"
           label="Title"
           validators={[VALIDATOR_REQUIRE()]}
-          value={filterPlace.title}
+          value={formState.inputs.title.value}
           errorText="Please enter a valid title."
-          onInput={()=>{}}
+          onInput={inputHandler}
           valid={true}
         />
         <Input
@@ -49,9 +73,9 @@ const UpdatePlaces = () => {
           type="text"
           label="Description"
           validators={[VALIDATOR_MINLENGTH(5)]}
-          value={filterPlace.description}
+          value={formState.inputs.description.value}
           errorText="Please enter a description (At least 5 Characters)."
-          onInput={()=>{}}
+          onInput={inputHandler}
           valid={true}
         />
          <Input
@@ -60,12 +84,12 @@ const UpdatePlaces = () => {
           type="text"
           label="Address"
           validators={[VALIDATOR_REQUIRE()]}
-          value={filterPlace.address}
+          value={formState.inputs.address.value}
           errorText="Please enter a valid Address."
-          onInput={()=>{}}
+          onInput={inputHandler}
           valid={true}
         />
-        <Button type='submit'>Update</Button>
+        <Button type='submit' disabled={!formState.isValid} onClick={submitHandler}>Update</Button>
         
         
       </form>

@@ -37,7 +37,7 @@ const ItemPlaces = (props) => {
                 </div>
                 <div className='place-item__actions'>
                     <Button onClick={clickModelHandler} inverse>View On Map</Button>
-                    <Button to={`/place/${place.id}`}>Edit</Button>
+                    <Button to={`/places/${place.id}`}>Edit</Button>
                     <Button danger>Delete</Button>
                 </div>
             </Card>

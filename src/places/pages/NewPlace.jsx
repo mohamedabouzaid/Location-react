@@ -1,46 +1,14 @@
-import React, { useCallback, useReducer } from "react";
+import React, { useReducer } from "react";
+import useFormValidation from '../../shared/hook/useFormValidation'
 import Input from "../../shared/components/ButtonEl/Input";
 import "./newplace.css";
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../util/validators";
+import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../shared/util/validators";
 import Button from '../../shared/components/ButtonEl/Button'
 const NewPlace = () => {
  
-  const resucerForm = (state, action) => {
-    switch (action.type) {
-      case "inputChange":
-        let formIsValid = true;
-
-        
-        for (const inputId in state.inputs) {
-          if (inputId === action.inputId) {
-            
-            formIsValid = formIsValid && action.isValid;
-          
-          }else{
-        
-            formIsValid = formIsValid && state.inputs[inputId].isValid;
-          
-          }
-          }
-        
-        
-        return {
-          ...state,
-          inputs: {
-            ...state.inputs,
-            [action.inputId]: { value: action.value, isValid: action.isValid },
-          },
-          isValid: formIsValid,
-        };
-      case "description":
-        return {};
-
-      default:
-        return state;
-    }
-  };
-  const [formState, dispatch] = useReducer(resucerForm, {
-    inputs: {
+  
+  const [formState, inputHandler] = useFormValidation({
+   
       title: {
         value: "",
         isValid: false,
@@ -52,24 +20,16 @@ const NewPlace = () => {
      address: {
         value: "",
         isValid: false,
-      }
-    },
-    isValid: false,
-  });
+      
+    }},
+    false
+  );
+
   const submitHandler=(e)=>{
     e.preventDefault();
     console.log(formState.inputs);
   }
 
-  const inputHandler =useCallback( (id, value, isValid) => {
-    dispatch({
-      type: "inputChange",
-      value: value,
-      isValid: isValid,
-      inputId: id,
-    });
-   
-  },[dispatch]);
 
 
   return (
