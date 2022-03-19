@@ -3,6 +3,7 @@ import Card from '../../shared/components/UIElements/Card'
 import './ItemPlaces.css'
 import Button from '../../shared/components/ButtonEl/Button'
 import Modle from '../../shared/components/UIElements/Modal'
+import Map from '../../shared/components/UIElements/Map'
 
 const ItemPlaces = (props) => {
     const {place}=props
@@ -18,7 +19,10 @@ const ItemPlaces = (props) => {
       contentClass='place-item__modal-content'
       footerClass='place-item__modal-actions'
       footer={<button onClick={cancleModelHandler}>Close</button>}>
-      <div className='map-container'>Mapis here</div>
+      <div className='map-container'>
+           <Map center={place.location} zoom={20} />
+
+      </div>
       
       </Modle> }
         <li className='place-item'>
