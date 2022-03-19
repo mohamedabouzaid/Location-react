@@ -2,12 +2,15 @@ import React from 'react';
 import ItemPlace from './ItemPlaces'
 import './PlacesList.css'
 import Card from '../../shared/components/UIElements/Card'
+import Button from '../../shared/components/ButtonEl/Button'
+
 
 const PlacesList = (props) => {
     const {places}=props
 
     if(places.length==0){
-        return(<Card className='place-list center'>No Place Found</Card>)
+        return(<div className='place-list center'><Card className='place-list center'><h2>No Place Found </h2>       <Button to='/places/new'>Share Place</Button></Card>
+</div>)
     }
 
     return (

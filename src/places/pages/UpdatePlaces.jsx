@@ -3,6 +3,8 @@ import Input from '../../shared/components/ButtonEl/Input'
 import Button from '../../shared/components/ButtonEl/Button'
 import {VALIDATOR_MINLENGTH,VALIDATOR_REQUIRE} from '../../shared/util/validators'
 import useFormValidation from '../../shared/hook/useFormValidation';
+import { useEffect,useState } from 'react';
+import Card from '../../shared/components/UIElements/Card'
 
 
 const DummyPlaces=[{id:'p2'
@@ -27,10 +29,29 @@ const DummyPlaces=[{id:'p2'
 const UpdatePlaces = () => {
 
  const placeid=useParams().placeid;
-
- const filterPlace= DummyPlaces.find((place)=>(place.id===placeid))
- const [formState, inputHandler] = useFormValidation({
+const [isLooding,setLooding]=useState(true);
+ 
+ const [formState, inputHandler,setUpdateData] = useFormValidation({
    
+    title: {
+      value:'',
+      isValid: false,
+    },
+    description: {
+      value: '',
+      isValid: false,
+    },
+   address: {
+      value: '',
+      isValid: false,
+    
+  }},
+  true
+);
+const filterPlace= DummyPlaces.find((place)=>(place.id===placeid))
+useEffect(()=>{
+  if(filterPlace)
+  {setUpdateData({
     title: {
       value:filterPlace.title,
       isValid: true,
@@ -44,15 +65,21 @@ const UpdatePlaces = () => {
       isValid: true,
     
   }},
-  true
-);
+  true)
+   setLooding(false)}
+},[filterPlace.address, filterPlace.description, filterPlace.title, setUpdateData])
 
 
 const submitHandler=(e)=>{
     e.preventDefault();
     console.log(formState.inputs);
   }
-
+  if(filterPlace===0){
+    return<Card >No place Found </Card>
+  }
+  if(isLooding){
+      return<Card > loooding........</Card>
+  }
 
     return (
         <form className="place-form">

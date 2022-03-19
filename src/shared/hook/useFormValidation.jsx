@@ -20,8 +20,12 @@ const resucerForm = (state, action) => {
                 },
                 isValid: formIsValid,
             };
-        case "description":
-            return {};
+        case "setUpdateData":
+            return {
+                ...state,
+                inputs: action.inputs,
+                isValid:  action.isValid,
+            };
 
         default:
             return state;
@@ -44,7 +48,17 @@ const useFormValidation = (initialValue, isValid) => {
    
   },[dispatch]);
 
-    return[formState,inputHandler];
+  const setUpdateData =useCallback( (updateInput, isValid) => {
+    dispatch({
+      type: "setUpdateData",
+      inputs:updateInput,
+       isValid: isValid,
+     
+    });
+   
+  },[dispatch]);
+
+    return[formState,inputHandler,setUpdateData];
 };
 
 export default useFormValidation;
