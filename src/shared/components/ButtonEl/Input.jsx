@@ -26,9 +26,9 @@ const Input = (props) => {
  const {id,onInput}=props
 
  const [inputState, dispatch] = useReducer(inputReducer, {
-    value: '',
+    value: props.value||'',
     blur:false,
-    isValid: false
+    isValid: props.valid||false
   });
   const {value,isValid}=inputState
  //validation
@@ -47,7 +47,7 @@ useEffect(()=>{
           dispatch({type:'Blur'})
       }
 
-
+     
       const element =
     props.element === 'input' ? (
       <input
